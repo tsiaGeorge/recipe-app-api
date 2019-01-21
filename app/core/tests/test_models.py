@@ -1,8 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 
-from core.models import Tag
+from core.models import Tag, Ingredient
 
 
 def sample_user(email='foo@bar.gr', password='pass123'):
@@ -70,3 +70,10 @@ class ModelTests(TestCase):
     def test_tag_str_representation(self):
         tag = Tag.objects.create(name='Vegan', user=sample_user())
         self.assertEqual(str(tag), 'Vegan')
+
+    def test_incredient_str(self):
+        ingredient = Ingredient.objects.create(
+            user=sample_user(), name='Vinegar'
+        )
+
+        self.assertEqual(str(ingredient), 'Vinegar')
