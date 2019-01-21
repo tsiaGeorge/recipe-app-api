@@ -31,7 +31,7 @@ class PrivateTagsAPITests(APITestCase):
         Tag.objects.create(name='Dessert', user=self.user)
 
         resp = self.client.get(TAG_URL)
-        tags=Tag.objects.all()
+        tags = Tag.objects.all()
         serializer = TagSerializer(tags, many=True)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         self.assertEqual(resp.data, serializer.data)
@@ -50,3 +50,16 @@ class PrivateTagsAPITests(APITestCase):
         tags = Tag.objects.filter(user=self.user).order_by('-name')
         self.assertEqual(resp.data[0]['name'], tags[0].name)
         self.assertEqual(resp.data[1]['name'], tags[1].name)
+
+    def test_tags_create_success(self):
+        payload = {'name': 'Vegan'}
+        resp = self.client.post(TAG_URL, payload)
+
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(resp.data['name'], payload['name'])
+
+    def test_tags_invalid_fail(self):
+        payload = {'name': ''}
+        resp = self.client.post(TAG_URL, payload)
+
+        self.assertEqual(resp.status_code, status.HTTP_400_BAD_REQUEST)
