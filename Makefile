@@ -1,7 +1,9 @@
 .PHONY: app
 
 migrations:
-	docker-compose run --rm app sh -c './manage.py makemigrations'
+	docker-compose run --rm app sh -c \
+	'./manage.py wait_for_db && \
+	./manage.py makemigrations'
 
 app:
 	docker-compose up app
@@ -13,4 +15,4 @@ stop:
 	docker-compose stop
 
 test:
-	docker-compose run --rm app sh -c './manage.py test -v3 && flake8'
+	docker-compose run --rm test
