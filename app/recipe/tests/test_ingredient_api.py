@@ -21,7 +21,8 @@ class PublicIngredientAPITests(APITestCase):
 class PrivateIngredientAPITests(APITestCase):
 
     def setUp(self):
-        self.user = get_user_model().objects.create_user('foo@bar.gr', 'pass123')
+        self.user = get_user_model().objects.create_user('foo@bar.gr',
+                                                         'pass123')
         self.client.force_authenticate(self.user)
         # self.client.force_login(user)
 
