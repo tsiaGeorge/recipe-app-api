@@ -1,3 +1,0 @@
-[submodule "app/recipe/provider-serializer"]
-	path = app/recipe/provider-serializer
-	url = ssh://git@git.kpn.org:7999/nspire/provider-serializer.git
