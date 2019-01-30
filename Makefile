@@ -5,6 +5,12 @@ migrations:
 	'./manage.py wait_for_db && \
 	./manage.py makemigrations'
 
+migrate:
+	docker-compose run --rm app sh -c \
+	'./manage.py wait_for_db && \
+	./manage.py migrate'
+
+
 app:
 	docker-compose up app
 
