@@ -42,7 +42,21 @@ class RecipeViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, )
 
     def get_queryset(self, *args, **kwargs):
-        return self.queryset.filter(user=self.request.user).order_by('-id')
+        tags = self.request.query_params.get('tags')
+        ingredients = self.request.query_params.get('ingredients')
+
+        filters = {
+            'user': self.request.user
+        }
+
+        if tags:
+            filters['tags__id__in'] = [int(_id) for _id in tags.split(',')]
+
+        if ingredients:
+            filters['ingredients__id__in'] = [
+                int(_id) for _id in ingredients.split(',')]
+
+        return self.queryset.filter(**filters).order_by('-id')
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
