@@ -4,4 +4,4 @@ psycopg2==2.8.3
 
 flake8==3.7.7
 django-extensions==2.1.9
-pillow==6.1.0
+pillow==9.0.0
